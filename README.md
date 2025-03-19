@@ -10,7 +10,10 @@ igloo-website-clone/
 ├── styles.css         # CSS styles
 ├── script.js          # JavaScript functionality
 └── images/            # Directory for website images
-    └── placeholder.md # Placeholder for image files
+    ├── logo.svg       # Igloo logo
+    ├── hero-image.svg # Hero section image
+    ├── about-image.svg # About section image
+    └── placeholder.md # Information about images
 ```
 
 ## Features
@@ -37,7 +40,18 @@ git clone https://github.com/Ja178411/igloo-website-clone.git
 
 2. Open `index.html` in your browser
 
-You can also view the live version at [https://ja178411.github.io/igloo-website-clone](https://ja178411.github.io/igloo-website-clone) once GitHub Pages is set up.
+## Deploying to GitHub Pages
+
+To make this website live on GitHub Pages:
+
+1. Go to your repository on GitHub
+2. Click on "Settings" tab
+3. In the left sidebar, click on "Pages"
+4. Under "Source", select "Deploy from a branch"
+5. Select the "main" branch and "/" (root) folder
+6. Click "Save"
+7. Wait a few minutes for your site to be published
+8. Access your site at https://username.github.io/igloo-website-clone
 
 ## Technologies Used
 
@@ -45,14 +59,15 @@ You can also view the live version at [https://ja178411.github.io/igloo-website-
 - CSS3 (with modern flexbox and grid layouts)
 - JavaScript (vanilla, no frameworks)
 - Font Awesome for icons
+- SVG images for graphics
 
 ## Future Improvements
 
-- Add actual images instead of placeholders
-- Implement more interactive elements
-- Add testimonials section
+- Add more interactive elements
+- Implement a testimonials slider section
 - Improve accessibility features
 - Optimize for performance
+- Add animations on scroll
 
 ## License
 
