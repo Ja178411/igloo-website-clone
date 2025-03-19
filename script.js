@@ -1,15 +1,46 @@
 // Mobile menu toggle
 document.addEventListener('DOMContentLoaded', function() {
-    const menuToggle = document.querySelector('.mobile-menu-toggle');
+    const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
     const nav = document.querySelector('nav');
     const ctaButtons = document.querySelector('.cta-buttons');
     
-    menuToggle.addEventListener('click', function() {
-        nav.classList.toggle('active');
-        ctaButtons.classList.toggle('active');
-        menuToggle.classList.toggle('active');
+    mobileMenuToggle.addEventListener('click', function() {
+        mobileMenuToggle.classList.toggle('active');
+        
+        if (nav.style.display === 'flex') {
+            nav.style.display = 'none';
+            ctaButtons.style.display = 'none';
+        } else {
+            nav.style.display = 'flex';
+            nav.style.flexDirection = 'column';
+            nav.style.position = 'absolute';
+            nav.style.top = '80px';
+            nav.style.left = '0';
+            nav.style.width = '100%';
+            nav.style.backgroundColor = '#fff';
+            nav.style.padding = '20px';
+            nav.style.boxShadow = '0 10px 10px rgba(0, 0, 0, 0.1)';
+            
+            ctaButtons.style.display = 'flex';
+            ctaButtons.style.flexDirection = 'column';
+            ctaButtons.style.position = 'absolute';
+            ctaButtons.style.top = nav.offsetHeight + 80 + 'px';
+            ctaButtons.style.left = '0';
+            ctaButtons.style.width = '100%';
+            ctaButtons.style.backgroundColor = '#fff';
+            ctaButtons.style.padding = '0 20px 20px';
+            ctaButtons.style.boxShadow = '0 10px 10px rgba(0, 0, 0, 0.1)';
+        }
     });
-
+    
+    // Handle window resize
+    window.addEventListener('resize', function() {
+        if (window.innerWidth > 767) {
+            nav.style = '';
+            ctaButtons.style = '';
+        }
+    });
+    
     // Smooth scrolling for anchor links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function(e) {
@@ -20,242 +51,146 @@ document.addEventListener('DOMContentLoaded', function() {
             
             const targetElement = document.querySelector(targetId);
             if (targetElement) {
+                // Close mobile menu if open
+                if (window.innerWidth <= 767 && nav.style.display === 'flex') {
+                    mobileMenuToggle.click();
+                }
+                
                 window.scrollTo({
-                    top: targetElement.offsetTop - 100,
+                    top: targetElement.offsetTop - 80,
                     behavior: 'smooth'
                 });
-                
-                // Close mobile menu if open
-                if (nav.classList.contains('active')) {
-                    nav.classList.remove('active');
-                    ctaButtons.classList.remove('active');
-                    menuToggle.classList.remove('active');
-                }
             }
         });
     });
-
-    // Sticky header with scroll effect
-    const header = document.querySelector('header');
-    let lastScrollTop = 0;
     
-    window.addEventListener('scroll', function() {
-        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-        
-        if (scrollTop > 100) {
-            header.classList.add('scrolled');
-        } else {
-            header.classList.remove('scrolled');
-        }
-        
-        if (scrollTop > lastScrollTop && scrollTop > 200) {
-            header.style.transform = 'translateY(-100%)';
-        } else {
-            header.style.transform = 'translateY(0)';
-        }
-        
-        lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
-    });
-
-    // Form validation
+    // Form submission
     const contactForm = document.querySelector('.contact-form form');
     if (contactForm) {
         contactForm.addEventListener('submit', function(e) {
             e.preventDefault();
             
-            // Simple validation
-            let valid = true;
-            const inputs = this.querySelectorAll('input, textarea');
+            // Get form data
+            const formData = {
+                name: document.getElementById('name').value,
+                email: document.getElementById('email').value,
+                company: document.getElementById('company').value,
+                message: document.getElementById('message').value
+            };
             
-            inputs.forEach(input => {
-                if (input.hasAttribute('required') && !input.value.trim()) {
-                    valid = false;
-                    input.classList.add('error');
-                } else if (input.type === 'email' && input.value.trim()) {
-                    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                    if (!emailRegex.test(input.value.trim())) {
-                        valid = false;
-                        input.classList.add('error');
-                    } else {
-                        input.classList.remove('error');
-                    }
-                } else {
-                    input.classList.remove('error');
-                }
-            });
+            // Here you would typically send the data to your server
+            console.log('Form submitted:', formData);
             
-            if (valid) {
-                // In a real application, you would send the form data to a server
-                const successMessage = document.createElement('div');
-                successMessage.className = 'success-message';
-                successMessage.textContent = 'Thank you for your message! We will get back to you soon.';
-                
-                contactForm.innerHTML = '';
-                contactForm.appendChild(successMessage);
-            }
+            // Show success message
+            const successMessage = document.createElement('div');
+            successMessage.classList.add('success-message');
+            successMessage.textContent = 'Thank you for your message! We will get back to you soon.';
+            successMessage.style.backgroundColor = '#dff0d8';
+            successMessage.style.color = '#3c763d';
+            successMessage.style.padding = '15px';
+            successMessage.style.borderRadius = '4px';
+            successMessage.style.marginTop = '20px';
+            
+            contactForm.appendChild(successMessage);
+            
+            // Reset form
+            contactForm.reset();
+            
+            // Remove success message after 5 seconds
+            setTimeout(() => {
+                successMessage.remove();
+            }, 5000);
         });
     }
-
+    
+    // Sticky header
+    const header = document.querySelector('header');
+    const headerHeight = header.offsetHeight;
+    
+    window.addEventListener('scroll', function() {
+        if (window.scrollY > headerHeight) {
+            header.classList.add('sticky');
+            header.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.1)';
+        } else {
+            header.classList.remove('sticky');
+            header.style.boxShadow = 'none';
+        }
+    });
+    
     // Animation on scroll
-    const animateElements = document.querySelectorAll('.feature-card, .about-content, .about-image, .pricing-card');
+    const animateElements = document.querySelectorAll('.feature-card, .pricing-card, .hero-content, .about-content, .about-image, .hero-image');
     
     function checkIfInView() {
         animateElements.forEach(element => {
-            const elementTop = element.getBoundingClientRect().top;
+            const elementPosition = element.getBoundingClientRect();
             const windowHeight = window.innerHeight;
             
-            if (elementTop < windowHeight - 100) {
-                element.classList.add('animate');
+            if (elementPosition.top < windowHeight * 0.8) {
+                element.style.opacity = '1';
+                element.style.transform = 'translateY(0)';
             }
         });
     }
     
+    // Set initial state for animation
+    animateElements.forEach(element => {
+        element.style.opacity = '0';
+        element.style.transform = 'translateY(30px)';
+        element.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+    });
+    
+    // Check if elements are in view on load and scroll
+    window.addEventListener('load', checkIfInView);
     window.addEventListener('scroll', checkIfInView);
-    checkIfInView(); // Check on page load
-
-    // Testimonial slider (if added to the page later)
-    const setupTestimonialSlider = () => {
+    
+    // Testimonial slider (if added later)
+    const createTestimonialSlider = () => {
         const testimonialSlider = document.querySelector('.testimonial-slider');
         if (!testimonialSlider) return;
         
-        const slides = testimonialSlider.querySelectorAll('.testimonial');
-        const prevBtn = testimonialSlider.querySelector('.prev-btn');
-        const nextBtn = testimonialSlider.querySelector('.next-btn');
+        const testimonials = testimonialSlider.querySelectorAll('.testimonial-item');
+        const totalSlides = testimonials.length;
         let currentSlide = 0;
         
-        function showSlide(index) {
-            slides.forEach((slide, i) => {
-                slide.style.display = i === index ? 'block' : 'none';
+        // Set initial position
+        testimonials.forEach((testimonial, index) => {
+            testimonial.style.transform = `translateX(${index * 100}%)`;
+        });
+        
+        // Next slide function
+        const nextSlide = () => {
+            currentSlide = (currentSlide + 1) % totalSlides;
+            updateSlidePosition();
+        };
+        
+        // Update slide positions
+        const updateSlidePosition = () => {
+            testimonials.forEach((testimonial, index) => {
+                testimonial.style.transform = `translateX(${(index - currentSlide) * 100}%)`;
+            });
+        };
+        
+        // Auto slide every 5 seconds
+        setInterval(nextSlide, 5000);
+        
+        // Add navigation buttons if needed
+        const prevButton = document.querySelector('.testimonial-prev');
+        const nextButton = document.querySelector('.testimonial-next');
+        
+        if (prevButton) {
+            prevButton.addEventListener('click', () => {
+                currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+                updateSlidePosition();
             });
         }
         
-        function nextSlide() {
-            currentSlide = (currentSlide + 1) % slides.length;
-            showSlide(currentSlide);
+        if (nextButton) {
+            nextButton.addEventListener('click', () => {
+                nextSlide();
+            });
         }
-        
-        function prevSlide() {
-            currentSlide = (currentSlide - 1 + slides.length) % slides.length;
-            showSlide(currentSlide);
-        }
-        
-        if (prevBtn) prevBtn.addEventListener('click', prevSlide);
-        if (nextBtn) nextBtn.addEventListener('click', nextSlide);
-        
-        showSlide(currentSlide);
-        
-        // Auto-advance slides
-        setInterval(nextSlide, 5000);
     };
     
-    setupTestimonialSlider();
-});
-
-// Add some CSS styling for additional effects
-document.addEventListener('DOMContentLoaded', function() {
-    const style = document.createElement('style');
-    style.textContent = `
-        /* Mobile menu styles */
-        @media (max-width: 767px) {
-            nav.active {
-                display: block;
-                position: absolute;
-                top: 80px;
-                left: 0;
-                width: 100%;
-                background-color: #fff;
-                box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
-                padding: 20px;
-            }
-            
-            nav.active ul {
-                flex-direction: column;
-            }
-            
-            nav.active ul li {
-                margin-left: 0;
-                margin-bottom: 15px;
-            }
-            
-            .cta-buttons.active {
-                display: flex;
-                flex-direction: column;
-                gap: 10px;
-                margin-top: 20px;
-                padding: 0 20px 20px;
-                background-color: #fff;
-            }
-            
-            .mobile-menu-toggle.active span:nth-child(1) {
-                transform: rotate(45deg) translate(5px, 5px);
-            }
-            
-            .mobile-menu-toggle.active span:nth-child(2) {
-                opacity: 0;
-            }
-            
-            .mobile-menu-toggle.active span:nth-child(3) {
-                transform: rotate(-45deg) translate(5px, -5px);
-            }
-        }
-        
-        /* Scroll effect for header */
-        header {
-            transition: transform 0.3s ease;
-        }
-        
-        header.scrolled {
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            padding: 10px 0;
-        }
-        
-        /* Form validation styles */
-        .form-group input.error,
-        .form-group textarea.error {
-            border-color: var(--danger-color);
-        }
-        
-        .success-message {
-            padding: 20px;
-            background-color: var(--success-color);
-            color: #fff;
-            border-radius: var(--border-radius);
-            text-align: center;
-            font-weight: 600;
-        }
-        
-        /* Animation styles */
-        .feature-card, .about-content, .about-image, .pricing-card {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.5s ease, transform 0.5s ease;
-        }
-        
-        .feature-card.animate, .about-content.animate, .about-image.animate, .pricing-card.animate {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        
-        .feature-card:nth-child(2) {
-            transition-delay: 0.1s;
-        }
-        
-        .feature-card:nth-child(3) {
-            transition-delay: 0.2s;
-        }
-        
-        .feature-card:nth-child(4) {
-            transition-delay: 0.3s;
-        }
-        
-        .pricing-card:nth-child(2) {
-            transition-delay: 0.1s;
-        }
-        
-        .pricing-card:nth-child(3) {
-            transition-delay: 0.2s;
-        }
-    `;
-    
-    document.head.appendChild(style);
+    // Initialize testimonial slider if it exists
+    createTestimonialSlider();
 });
