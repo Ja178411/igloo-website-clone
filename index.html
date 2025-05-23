@@ -15,18 +15,18 @@
                 <a href="#"><img src="images/logo.svg" alt="Igloo Inc Logo"></a>
             </div>
             <nav>
-                <ul>
-                    <li><a href="#features">Features</a></li>
-                    <li><a href="#about">About</a></li>
-                    <li><a href="#pricing">Pricing</a></li>
-                    <li><a href="#contact">Contact</a></li>
+                <ul role="menubar">
+                    <li role="none"><a href="#features" role="menuitem">Features</a></li>
+                    <li role="none"><a href="#about" role="menuitem">About</a></li>
+                    <li role="none"><a href="#pricing" role="menuitem">Pricing</a></li>
+                    <li role="none"><a href="#contact" role="menuitem">Contact</a></li>
                 </ul>
             </nav>
             <div class="cta-buttons">
                 <a href="#" class="btn btn-secondary">Log In</a>
                 <a href="#" class="btn btn-primary">Sign Up</a>
             </div>
-            <div class="mobile-menu-toggle">
+            <div class="mobile-menu-toggle" aria-label="Toggle mobile menu">
                 <span></span>
                 <span></span>
                 <span></span>
@@ -168,8 +168,8 @@
                     </div>
                 </div>
                 <div class="testimonial-navigation">
-                    <button class="testimonial-prev"><i class="fas fa-chevron-left"></i></button>
-                    <button class="testimonial-next"><i class="fas fa-chevron-right"></i></button>
+                    <button class="testimonial-prev" aria-label="Previous testimonial"><i class="fas fa-chevron-left"></i></button>
+                    <button class="testimonial-next" aria-label="Next testimonial"><i class="fas fa-chevron-right"></i></button>
                 </div>
             </div>
             <div class="client-logos">
@@ -244,7 +244,7 @@
             </div>
             <div class="contact-content">
                 <div class="contact-form">
-                    <form>
+                    <form aria-label="Contact form">
                         <div class="form-group">
                             <label for="name">Name</label>
                             <input type="text" id="name" name="name" required>

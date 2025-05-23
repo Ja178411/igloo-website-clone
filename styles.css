@@ -369,6 +369,8 @@ nav ul li a:hover {
 .testimonial-prev:hover,
 .testimonial-next:hover {
     background-color: #003d7a;
+    transform: translateY(-3px);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
 }
 
 .client-logos {
