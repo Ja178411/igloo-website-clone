@@ -278,6 +278,118 @@ nav ul li a:hover {
     margin-bottom: 5px;
 }
 
+/* Testimonials Section */
+.testimonials {
+    background-color: #fff;
+    overflow: hidden;
+}
+
+.testimonial-slider-container {
+    position: relative;
+    margin: 40px 0;
+}
+
+.testimonial-slider {
+    display: flex;
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+}
+
+.testimonial-item {
+    min-width: 100%;
+    transition: transform 0.5s ease;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.testimonial-content {
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    padding: 30px;
+    margin: 0 20px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    border: 1px solid #e9ecef;
+}
+
+.testimonial-content p {
+    font-size: 18px;
+    font-style: italic;
+    margin-bottom: 20px;
+}
+
+.testimonial-author {
+    display: flex;
+    align-items: center;
+}
+
+.testimonial-author img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 15px;
+    object-fit: cover;
+}
+
+.testimonial-author h4 {
+    margin: 0 0 5px;
+    font-size: 16px;
+}
+
+.testimonial-author p {
+    margin: 0;
+    font-size: 14px;
+    color: var(--secondary-color);
+    font-style: normal;
+}
+
+.testimonial-navigation {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 30px;
+}
+
+.testimonial-prev,
+.testimonial-next {
+    background-color: var(--primary-color);
+    color: white;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition);
+}
+
+.testimonial-prev:hover,
+.testimonial-next:hover {
+    background-color: #003d7a;
+}
+
+.client-logos {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-top: 60px;
+    flex-wrap: wrap;
+    gap: 30px;
+}
+
+.client-logos img {
+    height: 40px;
+    opacity: 0.6;
+    transition: var(--transition);
+}
+
+.client-logos img:hover {
+    opacity: 1;
+}
+
 /* Pricing Section */
 .pricing {
     background-color: #fff;
@@ -536,5 +648,18 @@ footer {
     .stats {
         flex-direction: column;
         gap: 20px;
+    }
+    
+    .testimonial-content {
+        margin: 0;
+        padding: 20px;
+    }
+    
+    .client-logos {
+        gap: 15px;
+    }
+    
+    .client-logos img {
+        height: 30px;
     }
 }
