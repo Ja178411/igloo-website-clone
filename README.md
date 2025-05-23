@@ -13,6 +13,13 @@ igloo-website-clone/
     ├── logo.svg       # Igloo logo
     ├── hero-image.svg # Hero section image
     ├── about-image.svg # About section image
+    ├── avatar1.svg    # Testimonial user avatar
+    ├── avatar2.svg    # Testimonial user avatar
+    ├── avatar3.svg    # Testimonial user avatar
+    ├── client1.svg    # Client logo
+    ├── client2.svg    # Client logo
+    ├── client3.svg    # Client logo
+    ├── client4.svg    # Client logo
     └── placeholder.md # Information about images
 ```
 
@@ -26,6 +33,7 @@ igloo-website-clone/
   - Hero
   - Features
   - About
+  - Testimonials with slider
   - Pricing
   - Contact
 
@@ -64,10 +72,10 @@ To make this website live on GitHub Pages:
 ## Future Improvements
 
 - Add more interactive elements
-- Implement a testimonials slider section
 - Improve accessibility features
 - Optimize for performance
-- Add animations on scroll
+- Implement dark mode
+- Add multilingual support
 
 ## License
 

@@ -118,7 +118,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     // Animation on scroll
-    const animateElements = document.querySelectorAll('.feature-card, .pricing-card, .hero-content, .about-content, .about-image, .hero-image');
+    const animateElements = document.querySelectorAll('.feature-card, .pricing-card, .hero-content, .about-content, .about-image, .hero-image, .testimonial-item');
     
     function checkIfInView() {
         animateElements.forEach(element => {
