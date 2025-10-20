@@ -3,32 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Igloo provides digital workplace solutions that help organizations improve communication, collaboration, knowledge sharing, and employee engagement.">
-    <meta name="keywords" content="digital workplace, collaboration, communication, knowledge management, employee engagement, remote work, hybrid work">
-    <meta name="author" content="Igloo Inc">
+    <meta name="description" content="Explore immersive 3D art experiences through interactive WebGL galleries and digital installations. Discover the future of digital art with Igloo 3D Showcase.">
+    <meta name="keywords" content="3D art, WebGL, interactive gallery, digital art, Three.js, 3D showcase, immersive art, creative coding, generative art">
+    <meta name="author" content="Igloo 3D Art">
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://www.igloo.inc/">
-    <meta property="og:title" content="Igloo Inc - The Future of Workplace Collaboration">
-    <meta property="og:description" content="Igloo provides digital workplace solutions that help organizations improve communication, collaboration, knowledge sharing, and employee engagement.">
+    <meta property="og:url" content="https://igloo3d.art/">
+    <meta property="og:title" content="Igloo - 3D Interactive Art Showcase">
+    <meta property="og:description" content="Explore immersive 3D art experiences through interactive WebGL galleries and digital installations.">
     <meta property="og:image" content="images/hero-image.svg">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://www.igloo.inc/">
-    <meta property="twitter:title" content="Igloo Inc - The Future of Workplace Collaboration">
-    <meta property="twitter:description" content="Igloo provides digital workplace solutions that help organizations improve communication, collaboration, knowledge sharing, and employee engagement.">
+    <meta property="twitter:url" content="https://igloo3d.art/">
+    <meta property="twitter:title" content="Igloo - 3D Interactive Art Showcase">
+    <meta property="twitter:description" content="Explore immersive 3D art experiences through interactive WebGL galleries and digital installations.">
     <meta property="twitter:image" content="images/hero-image.svg">
 
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
 
-    <title>Igloo Inc - Digital Workplace Solutions</title>
+    <title>Igloo - 3D Art Showcase & Interactive Gallery</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <!-- Three.js for 3D rendering -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+    <!-- GSAP for animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 </head>
 <body>
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loader-content">
+            <div class="loader-spinner"></div>
+            <div class="loader-text">Loading Experience</div>
+            <div class="loader-progress">
+                <div class="loader-bar" id="loaderBar"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- WebGL Canvas for 3D Background -->
+    <canvas id="webgl-canvas"></canvas>
+
     <!-- Header Section -->
     <header>
         <div class="container">
@@ -37,15 +58,14 @@
             </div>
             <nav>
                 <ul>
-                    <li><a href="#features">Features</a></li>
+                    <li><a href="#gallery">Gallery</a></li>
+                    <li><a href="#showcase">Showcase</a></li>
                     <li><a href="#about">About</a></li>
-                    <li><a href="#pricing">Pricing</a></li>
                     <li><a href="#contact">Contact</a></li>
                 </ul>
             </nav>
             <div class="cta-buttons">
-                <a href="#" class="btn btn-secondary">Log In</a>
-                <a href="#" class="btn btn-primary">Sign Up</a>
+                <a href="#gallery" class="btn btn-primary">Explore</a>
             </div>
             <div class="mobile-menu-toggle">
                 <span></span>
@@ -57,56 +77,118 @@
 
     <!-- Hero Section -->
     <section class="hero">
-        <div class="container">
+        <div class="hero-3d-container" id="hero3D"></div>
+        <div class="container hero-overlay">
             <div class="hero-content">
-                <h1>The Future of Workplace Collaboration</h1>
-                <p>Igloo provides digital workplace solutions that help organizations improve communication, collaboration, knowledge sharing, and employee engagement.</p>
+                <h1 class="glitch" data-text="3D Interactive Art">3D Interactive Art</h1>
+                <p class="hero-subtitle">Experience the future of digital art through immersive 3D galleries and interactive installations</p>
                 <div class="hero-cta">
-                    <a href="#" class="btn btn-primary">Get Started</a>
-                    <a href="#" class="btn btn-secondary">Request Demo</a>
+                    <a href="#gallery" class="btn btn-primary">
+                        <span>Enter Gallery</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                    <a href="#showcase" class="btn btn-glass">
+                        <span>View Showcase</span>
+                    </a>
                 </div>
             </div>
-            <div class="hero-image">
-                <img src="images/hero-image.svg" alt="Igloo Platform">
+            <div class="scroll-indicator">
+                <div class="mouse">
+                    <div class="wheel"></div>
+                </div>
+                <p>Scroll to explore</p>
             </div>
         </div>
     </section>
 
-    <!-- Features Section -->
-    <section id="features" class="features">
+    <!-- 3D Gallery Section -->
+    <section id="gallery" class="gallery-3d">
         <div class="container">
             <div class="section-header">
-                <h2>Key Features</h2>
-                <p>Discover how Igloo can transform your workplace</p>
+                <h2 class="reveal-text">Interactive 3D Gallery</h2>
+                <p>Explore our collection of immersive 3D artworks</p>
             </div>
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-comments"></i>
+            <div class="gallery-grid">
+                <div class="gallery-item" data-tilt>
+                    <div class="gallery-3d-wrapper">
+                        <div class="gallery-3d-scene" data-scene="1"></div>
                     </div>
-                    <h3>Communication</h3>
-                    <p>Keep your team connected with powerful communication tools.</p>
+                    <div class="gallery-info">
+                        <h3>Geometric Dreams</h3>
+                        <p>Abstract 3D composition</p>
+                    </div>
                 </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-users"></i>
+                <div class="gallery-item" data-tilt>
+                    <div class="gallery-3d-wrapper">
+                        <div class="gallery-3d-scene" data-scene="2"></div>
                     </div>
-                    <h3>Collaboration</h3>
-                    <p>Work together seamlessly no matter where your team is located.</p>
+                    <div class="gallery-info">
+                        <h3>Fluid Dynamics</h3>
+                        <p>Motion-based installation</p>
+                    </div>
                 </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-brain"></i>
+                <div class="gallery-item" data-tilt>
+                    <div class="gallery-3d-wrapper">
+                        <div class="gallery-3d-scene" data-scene="3"></div>
                     </div>
-                    <h3>Knowledge Management</h3>
-                    <p>Centralize your organization's knowledge for easy access.</p>
+                    <div class="gallery-info">
+                        <h3>Digital Landscapes</h3>
+                        <p>Procedural terrain</p>
+                    </div>
                 </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-chart-line"></i>
+                <div class="gallery-item" data-tilt>
+                    <div class="gallery-3d-wrapper">
+                        <div class="gallery-3d-scene" data-scene="4"></div>
                     </div>
-                    <h3>Analytics</h3>
-                    <p>Gain insights into workplace engagement and productivity.</p>
+                    <div class="gallery-info">
+                        <h3>Particle Universe</h3>
+                        <p>Interactive particle system</p>
+                    </div>
+                </div>
+                <div class="gallery-item" data-tilt>
+                    <div class="gallery-3d-wrapper">
+                        <div class="gallery-3d-scene" data-scene="5"></div>
+                    </div>
+                    <div class="gallery-info">
+                        <h3>Crystalline Forms</h3>
+                        <p>Reflective geometry</p>
+                    </div>
+                </div>
+                <div class="gallery-item" data-tilt>
+                    <div class="gallery-3d-wrapper">
+                        <div class="gallery-3d-scene" data-scene="6"></div>
+                    </div>
+                    <div class="gallery-info">
+                        <h3>Neon Structures</h3>
+                        <p>Cyberpunk aesthetics</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Showcase Section -->
+    <section id="showcase" class="showcase">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="reveal-text">Featured Showcase</h2>
+                <p>Immerse yourself in interactive 3D experiences</p>
+            </div>
+            <div class="showcase-viewer">
+                <div class="showcase-3d-container" id="showcase3D"></div>
+                <div class="showcase-controls">
+                    <button class="control-btn" id="rotateBtn">
+                        <i class="fas fa-sync-alt"></i>
+                        <span>Auto Rotate</span>
+                    </button>
+                    <button class="control-btn" id="wireframeBtn">
+                        <i class="fas fa-border-all"></i>
+                        <span>Wireframe</span>
+                    </button>
+                    <button class="control-btn" id="resetBtn">
+                        <i class="fas fa-undo"></i>
+                        <span>Reset View</span>
+                    </button>
                 </div>
             </div>
         </div>
@@ -117,163 +199,39 @@
         <div class="container">
             <div class="about-content">
                 <div class="section-header">
-                    <h2>About Igloo</h2>
-                    <p>The digital workplace platform built for today's evolving work environment</p>
+                    <h2 class="reveal-text">About the Experience</h2>
+                    <p>Pushing the boundaries of digital art</p>
                 </div>
-                <p>Igloo is a leading provider of digital workplace solutions, helping organizations improve communication, collaboration, knowledge sharing, and employee engagement. Our platform is designed to address the unique challenges of modern work environments, whether your teams are in-office, remote, or hybrid.</p>
+                <p>We create immersive 3D experiences that blend art, technology, and interaction. Our gallery showcases cutting-edge WebGL artwork, interactive installations, and experimental digital pieces designed to challenge perception and inspire creativity.</p>
                 <div class="stats">
                     <div class="stat">
-                        <h3>1000+</h3>
-                        <p>Companies</p>
+                        <h3>50+</h3>
+                        <p>Artworks</p>
                     </div>
                     <div class="stat">
-                        <h3>100+</h3>
-                        <p>Countries</p>
+                        <h3>100K+</h3>
+                        <p>Visitors</p>
                     </div>
                     <div class="stat">
-                        <h3>5M+</h3>
-                        <p>Users</p>
+                        <h3>24/7</h3>
+                        <p>Access</p>
                     </div>
                 </div>
             </div>
-            <div class="about-image">
-                <img src="images/about-image.svg" alt="About Igloo">
+            <div class="about-visual">
+                <div class="particle-container" id="aboutParticles"></div>
             </div>
         </div>
     </section>
 
-    <!-- Testimonials Section -->
-    <section id="testimonials" class="testimonials">
-        <div class="container">
-            <div class="section-header">
-                <h2>What Our Customers Say</h2>
-                <p>Hear from organizations that have transformed their workplace with Igloo</p>
-            </div>
-            <div class="testimonial-slider">
-                <div class="testimonial-item">
-                    <div class="testimonial-content">
-                        <div class="quote-icon">
-                            <i class="fas fa-quote-left"></i>
-                        </div>
-                        <p class="testimonial-text">"Igloo has completely transformed how our team collaborates. The platform is intuitive, powerful, and has helped us increase productivity by 40%."</p>
-                        <div class="testimonial-author">
-                            <div class="author-avatar">
-                                <i class="fas fa-user"></i>
-                            </div>
-                            <div class="author-info">
-                                <h4>Sarah Johnson</h4>
-                                <p>CEO, TechCorp Solutions</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="testimonial-item">
-                    <div class="testimonial-content">
-                        <div class="quote-icon">
-                            <i class="fas fa-quote-left"></i>
-                        </div>
-                        <p class="testimonial-text">"As a remote-first company, we needed a solution that could keep our team connected. Igloo exceeded all our expectations."</p>
-                        <div class="testimonial-author">
-                            <div class="author-avatar">
-                                <i class="fas fa-user"></i>
-                            </div>
-                            <div class="author-info">
-                                <h4>Michael Chen</h4>
-                                <p>CTO, Digital Innovations</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="testimonial-item">
-                    <div class="testimonial-content">
-                        <div class="quote-icon">
-                            <i class="fas fa-quote-left"></i>
-                        </div>
-                        <p class="testimonial-text">"The knowledge management features have been a game-changer. Our employees can now find information instantly, saving countless hours."</p>
-                        <div class="testimonial-author">
-                            <div class="author-avatar">
-                                <i class="fas fa-user"></i>
-                            </div>
-                            <div class="author-info">
-                                <h4>Emily Rodriguez</h4>
-                                <p>VP of Operations, GlobalTech</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="testimonial-nav">
-                <button class="testimonial-prev" aria-label="Previous testimonial">
-                    <i class="fas fa-chevron-left"></i>
-                </button>
-                <div class="testimonial-dots"></div>
-                <button class="testimonial-next" aria-label="Next testimonial">
-                    <i class="fas fa-chevron-right"></i>
-                </button>
-            </div>
-        </div>
-    </section>
-
-    <!-- Pricing Section -->
-    <section id="pricing" class="pricing">
-        <div class="container">
-            <div class="section-header">
-                <h2>Pricing Plans</h2>
-                <p>Choose the right plan for your organization</p>
-            </div>
-            <div class="pricing-grid">
-                <div class="pricing-card">
-                    <div class="pricing-header">
-                        <h3>Starter</h3>
-                        <div class="price">$9<span>/month per user</span></div>
-                    </div>
-                    <ul class="pricing-features">
-                        <li>Up to 100 users</li>
-                        <li>Basic communication tools</li>
-                        <li>Standard templates</li>
-                        <li>5GB storage</li>
-                        <li>Email support</li>
-                    </ul>
-                    <a href="#" class="btn btn-primary">Get Started</a>
-                </div>
-                <div class="pricing-card featured">
-                    <div class="pricing-header">
-                        <h3>Business</h3>
-                        <div class="price">$19<span>/month per user</span></div>
-                    </div>
-                    <ul class="pricing-features">
-                        <li>Unlimited users</li>
-                        <li>Advanced collaboration tools</li>
-                        <li>Custom templates</li>
-                        <li>25GB storage</li>
-                        <li>Priority support</li>
-                    </ul>
-                    <a href="#" class="btn btn-primary">Get Started</a>
-                </div>
-                <div class="pricing-card">
-                    <div class="pricing-header">
-                        <h3>Enterprise</h3>
-                        <div class="price">Contact Us</div>
-                    </div>
-                    <ul class="pricing-features">
-                        <li>Unlimited users</li>
-                        <li>Full feature suite</li>
-                        <li>Custom integrations</li>
-                        <li>Unlimited storage</li>
-                        <li>24/7 dedicated support</li>
-                    </ul>
-                    <a href="#" class="btn btn-primary">Contact Sales</a>
-                </div>
-            </div>
-        </div>
-    </section>
 
     <!-- Contact Section -->
     <section id="contact" class="contact">
+        <div class="contact-3d-bg" id="contact3D"></div>
         <div class="container">
             <div class="section-header">
-                <h2>Get in Touch</h2>
-                <p>We'd love to hear from you</p>
+                <h2 class="reveal-text">Get in Touch</h2>
+                <p>Let's create something amazing together</p>
             </div>
             <div class="contact-content">
                 <div class="contact-form">
@@ -287,34 +245,38 @@
                             <input type="email" id="email" name="email" required>
                         </div>
                         <div class="form-group">
-                            <label for="company">Company</label>
-                            <input type="text" id="company" name="company">
+                            <label for="interest">Interest</label>
+                            <select id="interest" name="interest">
+                                <option value="collaboration">Collaboration</option>
+                                <option value="commission">Commission</option>
+                                <option value="exhibition">Exhibition</option>
+                                <option value="other">Other</option>
+                            </select>
                         </div>
                         <div class="form-group">
                             <label for="message">Message</label>
                             <textarea id="message" name="message" rows="5" required></textarea>
                         </div>
-                        <button type="submit" class="btn btn-primary">Send Message</button>
+                        <button type="submit" class="btn btn-primary">
+                            <span>Send Message</span>
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
                     </form>
                 </div>
                 <div class="contact-info">
                     <div class="info-item">
-                        <i class="fas fa-map-marker-alt"></i>
-                        <p>123 Business Ave, Suite 100<br>San Francisco, CA 94107</p>
-                    </div>
-                    <div class="info-item">
-                        <i class="fas fa-phone"></i>
-                        <p>+1 (888) 123-4567</p>
-                    </div>
-                    <div class="info-item">
                         <i class="fas fa-envelope"></i>
-                        <p>info@igloo.inc</p>
+                        <p>hello@igloo3d.art</p>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-globe"></i>
+                        <p>Available worldwide</p>
                     </div>
                     <div class="social-links">
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-facebook"></i></a>
-                        <a href="#"><i class="fab fa-linkedin"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" aria-label="Behance"><i class="fab fa-behance"></i></a>
+                        <a href="#" aria-label="Dribbble"><i class="fab fa-dribbble"></i></a>
                     </div>
                 </div>
             </div>
@@ -324,53 +286,45 @@
     <!-- Footer -->
     <footer>
         <div class="container">
-            <div class="footer-grid">
+            <div class="footer-content">
                 <div class="footer-logo">
-                    <img src="images/logo.svg" alt="Igloo Inc Logo">
-                    <p>Creating better digital workplaces</p>
+                    <img src="images/logo.svg" alt="Igloo 3D Art">
+                    <p>Exploring the intersection of art, code, and imagination</p>
                 </div>
                 <div class="footer-links">
-                    <h4>Product</h4>
-                    <ul>
-                        <li><a href="#">Features</a></li>
-                        <li><a href="#">Pricing</a></li>
-                        <li><a href="#">Integrations</a></li>
-                        <li><a href="#">Roadmap</a></li>
-                    </ul>
-                </div>
-                <div class="footer-links">
-                    <h4>Company</h4>
-                    <ul>
-                        <li><a href="#">About</a></li>
-                        <li><a href="#">Careers</a></li>
-                        <li><a href="#">Blog</a></li>
-                        <li><a href="#">Press</a></li>
-                    </ul>
-                </div>
-                <div class="footer-links">
-                    <h4>Resources</h4>
-                    <ul>
-                        <li><a href="#">Help Center</a></li>
-                        <li><a href="#">Community</a></li>
-                        <li><a href="#">Webinars</a></li>
-                        <li><a href="#">Documentation</a></li>
-                    </ul>
-                </div>
-                <div class="footer-links">
-                    <h4>Legal</h4>
-                    <ul>
-                        <li><a href="#">Privacy Policy</a></li>
-                        <li><a href="#">Terms of Service</a></li>
-                        <li><a href="#">Security</a></li>
-                        <li><a href="#">GDPR</a></li>
-                    </ul>
+                    <div class="footer-column">
+                        <h4>Explore</h4>
+                        <ul>
+                            <li><a href="#gallery">Gallery</a></li>
+                            <li><a href="#showcase">Showcase</a></li>
+                            <li><a href="#about">About</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h4>Connect</h4>
+                        <ul>
+                            <li><a href="#contact">Contact</a></li>
+                            <li><a href="#">Newsletter</a></li>
+                            <li><a href="#">Collaborations</a></li>
+                        </ul>
+                    </div>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2025 Igloo Inc. All rights reserved.</p>
+                <p>&copy; 2025 Igloo 3D Art Showcase. All rights reserved.</p>
+                <div class="footer-social">
+                    <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" aria-label="Behance"><i class="fab fa-behance"></i></a>
+                </div>
             </div>
         </div>
     </footer>
+
+    <!-- Back to Top Button -->
+    <button class="back-to-top" id="backToTop" aria-label="Back to top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
 
     <script src="script.js"></script>
 </body>
