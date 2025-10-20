@@ -3,70 +3,63 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Explore immersive 3D art experiences through interactive WebGL galleries and digital installations. Discover the future of digital art with Igloo 3D Showcase.">
-    <meta name="keywords" content="3D art, WebGL, interactive gallery, digital art, Three.js, 3D showcase, immersive art, creative coding, generative art">
-    <meta name="author" content="Igloo 3D Art">
+    <meta name="description" content="Immersive 3D art showcase and interactive gallery featuring stunning WebGL animations and creative digital experiences.">
+    <meta name="keywords" content="3D art, WebGL, interactive gallery, digital art, Three.js, creative showcase, 3D animation">
+    <meta name="author" content="Igloo Creative Studio">
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://igloo3d.art/">
-    <meta property="og:title" content="Igloo - 3D Interactive Art Showcase">
-    <meta property="og:description" content="Explore immersive 3D art experiences through interactive WebGL galleries and digital installations.">
+    <meta property="og:url" content="https://igloo-3d-showcase.com/">
+    <meta property="og:title" content="Igloo - 3D Art Showcase & Interactive Gallery">
+    <meta property="og:description" content="Immersive 3D art showcase featuring stunning WebGL animations and creative digital experiences.">
     <meta property="og:image" content="images/hero-image.svg">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://igloo3d.art/">
-    <meta property="twitter:title" content="Igloo - 3D Interactive Art Showcase">
-    <meta property="twitter:description" content="Explore immersive 3D art experiences through interactive WebGL galleries and digital installations.">
+    <meta property="twitter:url" content="https://igloo-3d-showcase.com/">
+    <meta property="twitter:title" content="Igloo - 3D Art Showcase & Interactive Gallery">
+    <meta property="twitter:description" content="Immersive 3D art showcase featuring stunning WebGL animations and creative digital experiences.">
     <meta property="twitter:image" content="images/hero-image.svg">
 
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
 
-    <title>Igloo - 3D Art Showcase & Interactive Gallery</title>
+    <title>Igloo - 3D Art Showcase</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-
-    <!-- Three.js for 3D rendering -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-
-    <!-- GSAP for animations -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 </head>
 <body>
     <!-- Loading Screen -->
-    <div class="loading-screen" id="loadingScreen">
-        <div class="loader-content">
-            <div class="loader-spinner"></div>
-            <div class="loader-text">Loading Experience</div>
-            <div class="loader-progress">
-                <div class="loader-bar" id="loaderBar"></div>
+    <div id="loading-screen">
+        <div class="loading-content">
+            <div class="loading-spinner"></div>
+            <div class="loading-text">Loading Experience...</div>
+            <div class="loading-progress">
+                <div class="loading-bar"></div>
             </div>
         </div>
     </div>
 
-    <!-- WebGL Canvas for 3D Background -->
-    <canvas id="webgl-canvas"></canvas>
+    <!-- Custom Cursor -->
+    <div class="custom-cursor">
+        <div class="cursor-dot"></div>
+        <div class="cursor-ring"></div>
+    </div>
 
     <!-- Header Section -->
     <header>
         <div class="container">
             <div class="logo">
-                <a href="#"><img src="images/logo.svg" alt="Igloo Inc Logo"></a>
+                <a href="#"><span class="logo-text">IGLOO</span></a>
             </div>
             <nav>
                 <ul>
                     <li><a href="#gallery">Gallery</a></li>
                     <li><a href="#showcase">Showcase</a></li>
-                    <li><a href="#about">About</a></li>
+                    <li><a href="#experience">Experience</a></li>
                     <li><a href="#contact">Contact</a></li>
                 </ul>
             </nav>
-            <div class="cta-buttons">
-                <a href="#gallery" class="btn btn-primary">Explore</a>
-            </div>
             <div class="mobile-menu-toggle">
                 <span></span>
                 <span></span>
@@ -75,163 +68,167 @@
         </div>
     </header>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="hero-3d-container" id="hero3D"></div>
-        <div class="container hero-overlay">
-            <div class="hero-content">
-                <h1 class="glitch" data-text="3D Interactive Art">3D Interactive Art</h1>
-                <p class="hero-subtitle">Experience the future of digital art through immersive 3D galleries and interactive installations</p>
-                <div class="hero-cta">
-                    <a href="#gallery" class="btn btn-primary">
-                        <span>Enter Gallery</span>
-                        <i class="fas fa-arrow-right"></i>
-                    </a>
-                    <a href="#showcase" class="btn btn-glass">
-                        <span>View Showcase</span>
-                    </a>
+    <!-- Hero Section with 3D Canvas -->
+    <section class="hero" id="hero">
+        <canvas id="hero-canvas"></canvas>
+        <div class="hero-overlay">
+            <div class="container">
+                <div class="hero-content">
+                    <h1 class="hero-title">
+                        <span class="title-line">Immersive</span>
+                        <span class="title-line">3D Art</span>
+                        <span class="title-line">Experience</span>
+                    </h1>
+                    <p class="hero-subtitle">Explore the intersection of art, technology, and imagination</p>
+                    <div class="hero-cta">
+                        <a href="#gallery" class="btn btn-primary">Explore Gallery</a>
+                        <a href="#experience" class="btn btn-secondary">View Experience</a>
+                    </div>
                 </div>
             </div>
-            <div class="scroll-indicator">
-                <div class="mouse">
-                    <div class="wheel"></div>
-                </div>
-                <p>Scroll to explore</p>
+        </div>
+        <div class="scroll-indicator">
+            <div class="mouse">
+                <div class="wheel"></div>
             </div>
+            <p>Scroll to explore</p>
         </div>
     </section>
 
-    <!-- 3D Gallery Section -->
-    <section id="gallery" class="gallery-3d">
+    <!-- Interactive Gallery Section -->
+    <section id="gallery" class="gallery">
         <div class="container">
             <div class="section-header">
-                <h2 class="reveal-text">Interactive 3D Gallery</h2>
-                <p>Explore our collection of immersive 3D artworks</p>
+                <h2 class="section-title">Featured Artworks</h2>
+                <p class="section-subtitle">Interactive 3D gallery showcasing creative excellence</p>
             </div>
             <div class="gallery-grid">
-                <div class="gallery-item" data-tilt>
-                    <div class="gallery-3d-wrapper">
-                        <div class="gallery-3d-scene" data-scene="1"></div>
+                <div class="gallery-item" data-artwork="abstract-forms">
+                    <div class="gallery-canvas-container">
+                        <canvas class="gallery-canvas"></canvas>
                     </div>
                     <div class="gallery-info">
-                        <h3>Geometric Dreams</h3>
-                        <p>Abstract 3D composition</p>
+                        <h3>Abstract Forms</h3>
+                        <p>Geometric Exploration</p>
                     </div>
                 </div>
-                <div class="gallery-item" data-tilt>
-                    <div class="gallery-3d-wrapper">
-                        <div class="gallery-3d-scene" data-scene="2"></div>
+                <div class="gallery-item" data-artwork="fluid-dynamics">
+                    <div class="gallery-canvas-container">
+                        <canvas class="gallery-canvas"></canvas>
                     </div>
                     <div class="gallery-info">
                         <h3>Fluid Dynamics</h3>
-                        <p>Motion-based installation</p>
+                        <p>Organic Motion</p>
                     </div>
                 </div>
-                <div class="gallery-item" data-tilt>
-                    <div class="gallery-3d-wrapper">
-                        <div class="gallery-3d-scene" data-scene="3"></div>
+                <div class="gallery-item" data-artwork="crystalline-structures">
+                    <div class="gallery-canvas-container">
+                        <canvas class="gallery-canvas"></canvas>
                     </div>
                     <div class="gallery-info">
-                        <h3>Digital Landscapes</h3>
-                        <p>Procedural terrain</p>
+                        <h3>Crystalline Structures</h3>
+                        <p>Systematic Beauty</p>
                     </div>
                 </div>
-                <div class="gallery-item" data-tilt>
-                    <div class="gallery-3d-wrapper">
-                        <div class="gallery-3d-scene" data-scene="4"></div>
+                <div class="gallery-item" data-artwork="cosmic-landscapes">
+                    <div class="gallery-canvas-container">
+                        <canvas class="gallery-canvas"></canvas>
                     </div>
                     <div class="gallery-info">
-                        <h3>Particle Universe</h3>
-                        <p>Interactive particle system</p>
+                        <h3>Cosmic Landscapes</h3>
+                        <p>Digital Universes</p>
                     </div>
                 </div>
-                <div class="gallery-item" data-tilt>
-                    <div class="gallery-3d-wrapper">
-                        <div class="gallery-3d-scene" data-scene="5"></div>
+                <div class="gallery-item" data-artwork="neon-dreams">
+                    <div class="gallery-canvas-container">
+                        <canvas class="gallery-canvas"></canvas>
                     </div>
                     <div class="gallery-info">
-                        <h3>Crystalline Forms</h3>
-                        <p>Reflective geometry</p>
+                        <h3>Neon Dreams</h3>
+                        <p>Cyberpunk Aesthetics</p>
                     </div>
                 </div>
-                <div class="gallery-item" data-tilt>
-                    <div class="gallery-3d-wrapper">
-                        <div class="gallery-3d-scene" data-scene="6"></div>
+                <div class="gallery-item" data-artwork="minimal-elegance">
+                    <div class="gallery-canvas-container">
+                        <canvas class="gallery-canvas"></canvas>
                     </div>
                     <div class="gallery-info">
-                        <h3>Neon Structures</h3>
-                        <p>Cyberpunk aesthetics</p>
+                        <h3>Minimal Elegance</h3>
+                        <p>Less is More</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Showcase Section -->
+    <!-- 3D Showcase Section -->
     <section id="showcase" class="showcase">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="reveal-text">Featured Showcase</h2>
-                <p>Immerse yourself in interactive 3D experiences</p>
-            </div>
-            <div class="showcase-viewer">
-                <div class="showcase-3d-container" id="showcase3D"></div>
-                <div class="showcase-controls">
-                    <button class="control-btn" id="rotateBtn">
-                        <i class="fas fa-sync-alt"></i>
-                        <span>Auto Rotate</span>
-                    </button>
-                    <button class="control-btn" id="wireframeBtn">
-                        <i class="fas fa-border-all"></i>
-                        <span>Wireframe</span>
-                    </button>
-                    <button class="control-btn" id="resetBtn">
-                        <i class="fas fa-undo"></i>
-                        <span>Reset View</span>
-                    </button>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- About Section -->
-    <section id="about" class="about">
-        <div class="container">
-            <div class="about-content">
+        <canvas id="showcase-canvas"></canvas>
+        <div class="showcase-overlay">
+            <div class="container">
                 <div class="section-header">
-                    <h2 class="reveal-text">About the Experience</h2>
-                    <p>Pushing the boundaries of digital art</p>
+                    <h2 class="section-title">Interactive Showcase</h2>
+                    <p class="section-subtitle">Drag to rotate, scroll to zoom</p>
                 </div>
-                <p>We create immersive 3D experiences that blend art, technology, and interaction. Our gallery showcases cutting-edge WebGL artwork, interactive installations, and experimental digital pieces designed to challenge perception and inspire creativity.</p>
-                <div class="stats">
-                    <div class="stat">
-                        <h3>50+</h3>
-                        <p>Artworks</p>
-                    </div>
-                    <div class="stat">
-                        <h3>100K+</h3>
-                        <p>Visitors</p>
-                    </div>
-                    <div class="stat">
-                        <h3>24/7</h3>
-                        <p>Access</p>
-                    </div>
+                <div class="showcase-controls">
+                    <button class="control-btn" data-model="sphere"><i class="fas fa-circle"></i> Sphere</button>
+                    <button class="control-btn" data-model="cube"><i class="fas fa-cube"></i> Cube</button>
+                    <button class="control-btn" data-model="torus"><i class="fas fa-ring"></i> Torus</button>
+                    <button class="control-btn" data-model="knot"><i class="fas fa-project-diagram"></i> Knot</button>
                 </div>
-            </div>
-            <div class="about-visual">
-                <div class="particle-container" id="aboutParticles"></div>
             </div>
         </div>
     </section>
 
+    <!-- Experience Section with Particles -->
+    <section id="experience" class="experience">
+        <canvas id="particles-canvas"></canvas>
+        <div class="experience-overlay">
+            <div class="container">
+                <div class="experience-content">
+                    <div class="experience-text">
+                        <h2>The Art of Creation</h2>
+                        <p>We blend cutting-edge technology with artistic vision to create immersive digital experiences that push the boundaries of what's possible in web-based 3D art.</p>
+                        <div class="experience-stats">
+                            <div class="stat-item">
+                                <h3 class="stat-number" data-target="500">0</h3>
+                                <p>Projects</p>
+                            </div>
+                            <div class="stat-item">
+                                <h3 class="stat-number" data-target="1200">0</h3>
+                                <p>Artworks</p>
+                            </div>
+                            <div class="stat-item">
+                                <h3 class="stat-number" data-target="50">0</h3>
+                                <p>Awards</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="experience-visual">
+                        <div class="floating-card">
+                            <i class="fas fa-palette"></i>
+                            <h4>Creative Design</h4>
+                        </div>
+                        <div class="floating-card">
+                            <i class="fas fa-code"></i>
+                            <h4>WebGL Technology</h4>
+                        </div>
+                        <div class="floating-card">
+                            <i class="fas fa-magic"></i>
+                            <h4>Interactive Art</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <!-- Contact Section -->
     <section id="contact" class="contact">
-        <div class="contact-3d-bg" id="contact3D"></div>
         <div class="container">
             <div class="section-header">
-                <h2 class="reveal-text">Get in Touch</h2>
-                <p>Let's create something amazing together</p>
+                <h2 class="section-title">Get in Touch</h2>
+                <p class="section-subtitle">Let's create something extraordinary together</p>
             </div>
             <div class="contact-content">
                 <div class="contact-form">
@@ -245,11 +242,11 @@
                             <input type="email" id="email" name="email" required>
                         </div>
                         <div class="form-group">
-                            <label for="interest">Interest</label>
-                            <select id="interest" name="interest">
-                                <option value="collaboration">Collaboration</option>
-                                <option value="commission">Commission</option>
-                                <option value="exhibition">Exhibition</option>
+                            <label for="project">Project Type</label>
+                            <select id="project" name="project">
+                                <option value="3d-art">3D Art Commission</option>
+                                <option value="web-experience">Web Experience</option>
+                                <option value="interactive">Interactive Installation</option>
                                 <option value="other">Other</option>
                             </select>
                         </div>
@@ -257,26 +254,23 @@
                             <label for="message">Message</label>
                             <textarea id="message" name="message" rows="5" required></textarea>
                         </div>
-                        <button type="submit" class="btn btn-primary">
-                            <span>Send Message</span>
-                            <i class="fas fa-paper-plane"></i>
-                        </button>
+                        <button type="submit" class="btn btn-primary">Send Message</button>
                     </form>
                 </div>
                 <div class="contact-info">
                     <div class="info-item">
                         <i class="fas fa-envelope"></i>
-                        <p>hello@igloo3d.art</p>
+                        <p>hello@igloo-creative.com</p>
                     </div>
                     <div class="info-item">
-                        <i class="fas fa-globe"></i>
-                        <p>Available worldwide</p>
+                        <i class="fas fa-map-marker-alt"></i>
+                        <p>San Francisco, CA</p>
                     </div>
                     <div class="social-links">
-                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
                         <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
                         <a href="#" aria-label="Behance"><i class="fab fa-behance"></i></a>
                         <a href="#" aria-label="Dribbble"><i class="fab fa-dribbble"></i></a>
+                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
                     </div>
                 </div>
             </div>
@@ -288,44 +282,29 @@
         <div class="container">
             <div class="footer-content">
                 <div class="footer-logo">
-                    <img src="images/logo.svg" alt="Igloo 3D Art">
-                    <p>Exploring the intersection of art, code, and imagination</p>
+                    <span class="logo-text">IGLOO</span>
+                    <p>Creating immersive digital experiences</p>
                 </div>
                 <div class="footer-links">
-                    <div class="footer-column">
-                        <h4>Explore</h4>
-                        <ul>
-                            <li><a href="#gallery">Gallery</a></li>
-                            <li><a href="#showcase">Showcase</a></li>
-                            <li><a href="#about">About</a></li>
-                        </ul>
-                    </div>
-                    <div class="footer-column">
-                        <h4>Connect</h4>
-                        <ul>
-                            <li><a href="#contact">Contact</a></li>
-                            <li><a href="#">Newsletter</a></li>
-                            <li><a href="#">Collaborations</a></li>
-                        </ul>
-                    </div>
+                    <a href="#gallery">Gallery</a>
+                    <a href="#showcase">Showcase</a>
+                    <a href="#experience">Experience</a>
+                    <a href="#contact">Contact</a>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2025 Igloo 3D Art Showcase. All rights reserved.</p>
-                <div class="footer-social">
-                    <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                    <a href="#" aria-label="Behance"><i class="fab fa-behance"></i></a>
-                </div>
+                <p>&copy; 2025 Igloo Creative Studio. All rights reserved.</p>
             </div>
         </div>
     </footer>
 
     <!-- Back to Top Button -->
-    <button class="back-to-top" id="backToTop" aria-label="Back to top">
+    <button id="back-to-top" aria-label="Back to top">
         <i class="fas fa-arrow-up"></i>
     </button>
 
+    <!-- Three.js Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
