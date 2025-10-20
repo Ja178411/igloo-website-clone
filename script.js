@@ -143,54 +143,91 @@ document.addEventListener('DOMContentLoaded', function() {
     window.addEventListener('load', checkIfInView);
     window.addEventListener('scroll', checkIfInView);
     
-    // Testimonial slider (if added later)
+    // Testimonial slider
     const createTestimonialSlider = () => {
         const testimonialSlider = document.querySelector('.testimonial-slider');
         if (!testimonialSlider) return;
-        
+
         const testimonials = testimonialSlider.querySelectorAll('.testimonial-item');
         const totalSlides = testimonials.length;
         let currentSlide = 0;
-        
+        let autoSlideInterval;
+
+        // Create dots
+        const dotsContainer = document.querySelector('.testimonial-dots');
+        for (let i = 0; i < totalSlides; i++) {
+            const dot = document.createElement('div');
+            dot.classList.add('testimonial-dot');
+            if (i === 0) dot.classList.add('active');
+            dot.addEventListener('click', () => {
+                currentSlide = i;
+                updateSlidePosition();
+                resetAutoSlide();
+            });
+            dotsContainer.appendChild(dot);
+        }
+
         // Set initial position
         testimonials.forEach((testimonial, index) => {
             testimonial.style.transform = `translateX(${index * 100}%)`;
         });
-        
+
+        // Update slide positions and dots
+        const updateSlidePosition = () => {
+            testimonials.forEach((testimonial, index) => {
+                testimonial.style.transform = `translateX(${(index - currentSlide) * 100}%)`;
+            });
+
+            // Update dots
+            document.querySelectorAll('.testimonial-dot').forEach((dot, index) => {
+                if (index === currentSlide) {
+                    dot.classList.add('active');
+                } else {
+                    dot.classList.remove('active');
+                }
+            });
+        };
+
         // Next slide function
         const nextSlide = () => {
             currentSlide = (currentSlide + 1) % totalSlides;
             updateSlidePosition();
         };
-        
-        // Update slide positions
-        const updateSlidePosition = () => {
-            testimonials.forEach((testimonial, index) => {
-                testimonial.style.transform = `translateX(${(index - currentSlide) * 100}%)`;
-            });
+
+        // Previous slide function
+        const prevSlide = () => {
+            currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+            updateSlidePosition();
         };
-        
-        // Auto slide every 5 seconds
-        setInterval(nextSlide, 5000);
-        
-        // Add navigation buttons if needed
+
+        // Reset auto slide
+        const resetAutoSlide = () => {
+            clearInterval(autoSlideInterval);
+            autoSlideInterval = setInterval(nextSlide, 5000);
+        };
+
+        // Start auto slide
+        autoSlideInterval = setInterval(nextSlide, 5000);
+
+        // Add navigation buttons
         const prevButton = document.querySelector('.testimonial-prev');
         const nextButton = document.querySelector('.testimonial-next');
-        
+
         if (prevButton) {
             prevButton.addEventListener('click', () => {
-                currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
-                updateSlidePosition();
+                prevSlide();
+                resetAutoSlide();
             });
         }
-        
+
         if (nextButton) {
             nextButton.addEventListener('click', () => {
                 nextSlide();
+                resetAutoSlide();
             });
         }
     };
-    
+
     // Initialize testimonial slider if it exists
     createTestimonialSlider();
 });
